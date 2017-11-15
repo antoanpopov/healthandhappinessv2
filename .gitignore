@@ -1,0 +1,16 @@
+/vendor
+/node_modules
+/public/storage
+Homestead.yaml
+Homestead.json
+.env
+.php_cs.cache
+.idea
+/storage/*.key
+/.vagrant
+npm-debug.log
+yarn-error.log
+/public/themes/**/vendor/**
+/public/modules
+/Modules/**/Assets/**/vendor/**
+/Themes/**/assets/**/vendor/**
