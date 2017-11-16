@@ -1,0 +1,5 @@
+url: https://github.com/antoanpopov/health-theme
+versions:
+    "1.0.0":
+        added:
+            - Moved to using laravel.mix

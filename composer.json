@@ -27,7 +27,8 @@
         "idavoll/tag-module": "~2.0",
         "idavoll/flatly-theme": "~2.0",
         "idavoll/adminlte-theme": "~2.0",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "cviebrock/eloquent-sluggable": "^4.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
