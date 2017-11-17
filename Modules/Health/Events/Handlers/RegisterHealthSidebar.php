@@ -17,16 +17,16 @@ class RegisterHealthSidebar extends AbstractAdminSidebar
     public function extendWith(Menu $menu)
     {
         $menu->group(trans('core::sidebar.content'), function (Group $group) {
-            $group->item(trans('health::categories.categories'), function (Item $item) {
-                $item->icon('fa fa-health');
+            $group->item(trans('health::pages.categories.index'), function (Item $item) {
+                $item->icon('fa fa-list');
                 $item->weight(0);
                 $item->route('admin.health.categories.index');
                 $item->authorize(
                     $this->auth->hasAccess('health.categories.index')
                 );
             });
-            $group->item(trans('health::posts.posts'), function (Item $item) {
-                $item->icon('fa fa-health');
+            $group->item(trans('health::pages.posts.index'), function (Item $item) {
+                $item->icon('fa fa-file-text-o');
                 $item->weight(0);
                 $item->route('admin.health.posts.index');
                 $item->authorize(

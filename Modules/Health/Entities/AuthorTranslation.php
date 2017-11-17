@@ -4,12 +4,13 @@ namespace Modules\Health\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PostTranslation extends Model
+class AuthorTranslation extends Model
 {
     use \Cviebrock\EloquentSluggable\Sluggable;
-    protected $table = 'health__posts_translations';
+
+    protected $table = 'health__authors_translations';
     public $timestamps = false;
-    public $fillable = ['title', 'content', 'abstract', 'slug'];
+    public $fillable = ['names', 'slug'];
 
     /**
      * @return array
@@ -18,7 +19,7 @@ class PostTranslation extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'names'
             ]
         ];
     }

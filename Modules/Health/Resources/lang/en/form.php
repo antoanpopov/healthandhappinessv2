@@ -9,4 +9,9 @@ return [
     "abstract" => "Abstract",
     "content" => "Content",
     "published" => "Published",
+    "featured image" => "Featured Image",
+    "title" => "Title",
+    "author" => "Author",
+    "published at" => "Published",
+    "public" => "Public",
 ];

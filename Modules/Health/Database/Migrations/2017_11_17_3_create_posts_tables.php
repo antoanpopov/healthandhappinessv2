@@ -13,9 +13,10 @@ class CreatePostsTables extends Migration
     public function up()
     {
         Schema::create('health__posts', function (Blueprint $table) {
+
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->boolean('is_published')->default(0);
+            $table->boolean('is_public')->default(0);
 
             $table->integer('author_id')->unsigned()->nullable();
             $table->foreign('author_id')->references('id')->on('users')->after('id')->onUpdate('cascade')->onDelete('set null');
@@ -28,6 +29,7 @@ class CreatePostsTables extends Migration
             //dates
             $table->timestamps();
             $table->softDeletes();
+            $table->timestamp('published_at')->nullable();
         });
 
         Schema::create('health__posts_translations', function (Blueprint $table) {

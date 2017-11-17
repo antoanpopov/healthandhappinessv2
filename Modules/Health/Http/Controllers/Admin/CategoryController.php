@@ -8,6 +8,7 @@
 
 namespace Modules\Health\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\App;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 use Modules\Health\Entities\Category;
 use Modules\Health\Http\Requests;
@@ -52,7 +53,7 @@ class CategoryController extends AdminBaseController
         $this->categoryRepository->create($request->all());
 
         return redirect()->route('admin.health.categories.index')
-            ->withSuccess(trans('health::messages.category created'));
+            ->withSuccess(trans('health::messages.entity.created', ['entity' => $request[App::getLocale()]['title']]));
     }
 
 
@@ -77,11 +78,11 @@ class CategoryController extends AdminBaseController
 
         if ($request->get('button') === 'index') {
             return redirect()->route('admin.health.categories.index')
-                ->withSuccess(trans('health::messages.category updated'));
+                ->withSuccess(trans('health::messages.entity.updated', ['entity' => $category->title]));
         }
 
         return redirect()->back()
-            ->withSuccess(trans('health::messages.category updated'));
+            ->withSuccess(trans('health::messages.entity.updated', ['entity' => $category->title]));
     }
 
 
@@ -91,10 +92,11 @@ class CategoryController extends AdminBaseController
      */
     public function destroy(Category $category)
     {
+        $entityTitle = $category->title;
         $this->categoryRepository->destroy($category);
 
         return redirect()->route('admin.health.categories.index')
-            ->withSuccess(trans('health::messages.category deleted'));
+            ->withSuccess(trans('health::messages.entity.deleted', ['entity' => $entityTitle]));
     }
 
 }

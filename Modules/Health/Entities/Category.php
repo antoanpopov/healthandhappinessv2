@@ -12,15 +12,15 @@ class Category extends BaseModel
     protected $table = 'health__categories';
 
     protected $fillable = [
-        'is_published',
+        'is_public',
     ];
     protected $casts = [
-        'is_published' => 'boolean'
+        'is_public' => 'boolean'
     ];
 
-    public function scopePublished($query)
+    public function scopePublic($query)
     {
-        return $query->where('is_published', '=', true);
+        return $query->where('is_public', '=', true);
     }
 
     public function getFeaturedImageAttribute(){

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCategoriesTables extends Migration
+class CreateAuthorsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,8 @@ class CreateCategoriesTables extends Migration
      */
     public function up()
     {
-        Schema::create('health__categories', function (Blueprint $table) {
+        Schema::create('health__authors', function (Blueprint $table) {
+
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->boolean('is_public')->default(0);
@@ -28,22 +29,18 @@ class CreateCategoriesTables extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('health__categories_translations', function (Blueprint $table) {
+        Schema::create('health__authors_translations', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-
             $table->string('locale')->index();
-            $table->string('title');
+            $table->string('names');
             $table->string('slug')->unique();
-            $table->text('content');
-            $table->text('abstract');
 
-            $table->unique(['category_id', 'locale']);
-
+            $table->unique(['author_id', 'locale']);
 
             //foreign keys
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('health__categories')->onDelete('cascade');
+            $table->integer('author_id')->unsigned();
+            $table->foreign('author_id')->references('id')->on('health__authors')->onDelete('cascade');
         });
     }
 
@@ -54,7 +51,7 @@ class CreateCategoriesTables extends Migration
      */
     public function down()
     {
-        Schema::drop('health__categories_translations');
-        Schema::drop('health__categories');
+        Schema::drop('health__authors_translations');
+        Schema::drop('health__authors');
     }
 }

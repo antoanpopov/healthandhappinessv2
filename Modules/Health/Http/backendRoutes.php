@@ -45,32 +45,32 @@ $router->group(['prefix' => 'health'], function (Router $router) {
      */
     $router->get('posts', [
         'as' => 'admin.health.posts.index',
-        'uses' => 'PostsController@index',
+        'uses' => 'PostController@index',
         'middleware' => 'can:health.posts.index',
     ]);
     $router->get('posts/create', [
         'as' => 'admin.health.posts.create',
-        'uses' => 'PostsController@create',
+        'uses' => 'PostController@create',
         'middleware' => 'can:health.posts.create',
     ]);
     $router->post('posts', [
         'as' => 'admin.health.posts.store',
-        'uses' => 'PostsController@store',
+        'uses' => 'PostController@store',
         'middleware' => 'can:health.posts.create',
     ]);
     $router->get('posts/{health__post}/edit', [
         'as' => 'admin.health.posts.edit',
-        'uses' => 'PostsController@edit',
+        'uses' => 'PostController@edit',
         'middleware' => 'can:health.posts.edit',
     ]);
     $router->put('posts/{health__post}', [
         'as' => 'admin.health.posts.update',
-        'uses' => 'PostsController@update',
+        'uses' => 'PostController@update',
         'middleware' => 'can:health.posts.edit',
     ]);
     $router->delete('posts/{health__post}', [
         'as' => 'admin.health.posts.destroy',
-        'uses' => 'PostsController@destroy',
+        'uses' => 'PostController@destroy',
         'middleware' => 'can:health.posts.destroy',
     ]);
 });

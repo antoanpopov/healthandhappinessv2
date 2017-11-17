@@ -2,12 +2,12 @@
 
 @section('content-header')
     <h1>
-        {{ trans('health::pages.categories.index') }}
+        {{ trans('health::pages.posts.index') }}
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ URL::route('dashboard.index') }}"><i
                         class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li class="active">{{ trans('health::pages.categories.index') }}</li>
+        <li class="active">{{ trans('health::pages.posts.index') }}</li>
     </ol>
 @stop
 
@@ -16,9 +16,9 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
-                    <a href="{{ URL::route('admin.health.categories.create') }}" class="btn btn-primary btn-flat"
+                    <a href="{{ URL::route('admin.health.posts.create') }}" class="btn btn-primary btn-flat"
                        style="padding: 4px 10px;">
-                        <i class="fa fa-pencil"></i> {{ trans('health::pages.categories.create') }}
+                        <i class="fa fa-pencil"></i> {{ trans('health::pages.posts.create') }}
                     </a>
                 </div>
             </div>
@@ -31,50 +31,64 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>{{ trans('core::core.table.thumbnail') }}</th>
-                            <th>{{ trans('page::pages.table.name') }}</th>
-                            <th>{{ trans('health::form.abstract') }}</th>
+                            <th style="width:20px;" data-sortable="false">{{ trans('health::form.public') }}</th>
+                            <th>{{ trans('health::form.featured image') }}</th>
+                            <th>{{ trans('health::form.title') }}</th>
+                            <th>{{ trans('health::form.author') }}</th>
+                            <th>{{ trans('health::form.published at') }}</th>
                             <th>{{ trans('core::core.table.created at') }}</th>
                             <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if (isset($categories)): ?>
-                        <?php foreach ($categories as $category): ?>
+                        <?php if (isset($posts)): ?>
+                        <?php foreach ($posts as $post): ?>
                         <tr>
                             <td>
-                                <a href="{{ URL::route('admin.health.categories.edit', [$category->id]) }}">
-                                    {{ $category->id }}
+                                <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
+                                    {{ $post->id }}
                                 </a>
                             </td>
                             <td>
-                                @if($category->featured_image)
-                                    <img src="@thumbnail($category->featured_image->path, 'smallThumb')" alt=""/>
+                                @if($post->is_public)
+                                    <i class="fa fa-circle" style="color: lawngreen;"/>
+                                @else
+                                    <i class="fa fa-circle" style="color: red;"/>
+                                @endif
+                            </td>
+                            <td>
+                                @if($post->featured_image)
+                                    <img src="@thumbnail($post->featured_image->path, 'smallThumb')" alt=""/>
                                 @else
                                     -- / --
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ URL::route('admin.health.categories.edit', [$category->id]) }}">
-                                    {{ $category->title }}
+                                <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
+                                    {{ $post->title }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ URL::route('admin.health.categories.edit', [$category->id]) }}">
-                                    {!!   str_limit($category->abstract) !!}
+                                <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
+                                    {{ $post->author_name }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ URL::route('admin.health.categories.edit', [$category->id]) }}">
-                                    {{ $category->created_at }}
+                                <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
+                                    {{ $post->published_at }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
+                                    {{ $post->created_at }}
                                 </a>
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ URL::route('admin.health.categories.edit', [$category->id]) }}"
+                                    <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}"
                                        class="btn btn-default btn-flat"><i class="fa fa-pencil"></i></a>
                                     <button data-toggle="modal" data-target="#modal-delete-confirmation"
-                                            data-action-target="{{ route('admin.health.categories.destroy', [$category->id]) }}"
+                                            data-action-target="{{ route('admin.health.posts.destroy', [$post->id]) }}"
                                             class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
@@ -85,11 +99,13 @@
                         <tfoot>
                         <tr>
                             <th>Id</th>
-                            <th>{{ trans('core::core.table.thumbnail') }}</th>
-                            <th>{{ trans('page::pages.table.name') }}</th>
-                            <th>{{ trans('health::form.abstract') }}</th>
+                            <th>{{ trans('health::form.public') }}</th>
+                            <th>{{ trans('health::form.featured image') }}</th>
+                            <th>{{ trans('health::form.title') }}</th>
+                            <th>{{ trans('health::form.author') }}</th>
+                            <th>{{ trans('health::form.published at') }}</th>
                             <th>{{ trans('core::core.table.created at') }}</th>
-                            <th>{{ trans('core::core.table.actions') }}</th>
+                            <th data-sortable="false">{{ trans('core::core.table.actions') }}</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -118,7 +134,7 @@
         $(document).ready(function () {
             $(document).keypressAction({
                 actions: [
-                    {key: 'c', route: "<?= route('admin.health.categories.create') ?>"}
+                    {key: 'c', route: "<?= route('admin.health.posts.create') ?>"}
                 ]
             });
         });

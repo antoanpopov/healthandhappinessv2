@@ -14,5 +14,7 @@
         "Modules\\Health\\Providers\\HealthServiceProvider",
         "Modules\\Health\\Providers\\RouteServiceProvider"
     ],
-    "files": []
+    "files": [
+        "macros.php"
+    ]
 }

@@ -6,10 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Traits\CanGetSidebarClassForModule;
 use Modules\Core\Traits\CanPublishConfiguration;
-use Modules\Health\Entities\Category;
-use Modules\Health\Repositories\Cache\CacheCategoryDecorator;
-use Modules\Health\Repositories\CategoryRepository;
-use Modules\Health\Repositories\Eloquent\EloquentCategoryRepository;
+use Modules\Health\Console\DatabaseSetupCommand;
+use Modules\Health\Entities;
+use Modules\Health\Repositories;
 use Modules\Health\Events\Handlers\RegisterHealthSidebar;
 
 class HealthServiceProvider extends ServiceProvider
@@ -30,6 +29,7 @@ class HealthServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerBindings();
+        $this->app->make(\Illuminate\Database\Eloquent\Factory::class)->load(__DIR__ . '/../Database/Factories');
 
         $this->app['events']->listen(
             BuildingSidebar::class,
@@ -42,6 +42,12 @@ class HealthServiceProvider extends ServiceProvider
         $this->publishConfig('health', 'permissions');
         $this->publishConfig('health', 'config');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DatabaseSetupCommand::class,
+            ]);
+        }
     }
 
     /**
@@ -56,14 +62,34 @@ class HealthServiceProvider extends ServiceProvider
 
     private function registerBindings()
     {
-        $this->app->bind(CategoryRepository::class, function () {
-            $repository = new EloquentCategoryRepository(new Category());
+        $this->app->bind(Repositories\CategoryRepository::class, function () {
+            $repository = new Repositories\Eloquent\EloquentCategoryRepository(new Entities\Category());
 
             if (!config('app.cache')) {
                 return $repository;
             }
 
-            return new CacheCategoryDecorator($repository);
+            return new Repositories\Cache\CacheCategoryDecorator($repository);
+        });
+
+        $this->app->bind(Repositories\PostRepository::class, function () {
+            $repository = new Repositories\Eloquent\EloquentPostRepository(new Entities\Post());
+
+            if (!config('app.cache')) {
+                return $repository;
+            }
+
+            return new Repositories\Cache\CachePostDecorator($repository);
+        });
+
+        $this->app->bind(Repositories\AuthorRepository::class, function () {
+            $repository = new Repositories\Eloquent\EloquentAuthorRepository(new Entities\Author());
+
+            if (!config('app.cache')) {
+                return $repository;
+            }
+
+            return new Repositories\Cache\CacheAuthorDecorator($repository);
         });
     }
 

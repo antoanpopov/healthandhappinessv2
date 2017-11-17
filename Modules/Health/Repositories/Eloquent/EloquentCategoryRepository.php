@@ -30,6 +30,7 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
     public function destroy($category)
     {
         event(new Category\WasDeleted($category));
+
         return $category->delete();
     }
 }
