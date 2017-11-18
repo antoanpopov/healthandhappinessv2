@@ -49,7 +49,7 @@
                                     {{ $post->id }}
                                 </a>
                             </td>
-                            <td>
+                            <td style="text-align:center; vertical-align: middle;">
                                 @if($post->is_public)
                                     <i class="fa fa-circle" style="color: lawngreen;"/>
                                 @else
@@ -70,17 +70,17 @@
                             </td>
                             <td>
                                 <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
-                                    {{ $post->author_name }}
+                                    {{ $post->author_names }}
                                 </a>
                             </td>
                             <td>
                                 <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
-                                    {{ $post->published_at }}
+                                    {{ $post->published_at->format('d/m/Y H:i') }}
                                 </a>
                             </td>
                             <td>
                                 <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
-                                    {{ $post->created_at }}
+                                    {{ $post->created_at->format('d/m/Y H:i') }}
                                 </a>
                             </td>
                             <td>

@@ -52,3 +52,40 @@ Form::macro('userSelect', function ($name, $title, ViewErrorBag $errors, $object
 
     return new HtmlString($string);
 });
+
+Form::macro('dateRangePicker', function ($name, $title, ViewErrorBag $errors, $object = null, array $options = []) {
+
+    $string  = "<div class='".$options['class']."'>";
+    $string  .= "<div class='form-group " . ($errors->has($name) ? ' has-error' : '') . "'>";
+    $string .= Form::label($name, $title);
+    $string .= "<div class='input-group date'>";
+
+
+    if (is_object($object)) {
+        $currentData = ($object->$name)? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $object->$name)->format('Y-m-d H:i:s') : '';
+    } else {
+        $currentData = \Carbon\Carbon::now();
+    }
+
+    $string .= Form::text($name, Request::old($name, $currentData),['class' => 'form-control','id'=>'daterangepicker_'.$name]);
+    $string .= "<span class='input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>";
+    $string .= "</div>";
+    $string .= $errors->first($name, '<span class="help-block">:message</span>');
+    $string .= "</div></div>";
+    $string .= "<script type=\"text/javascript\">
+            $(function () {
+                $('#daterangepicker_" . $name . "').daterangepicker({
+                    startDate: '".date('d-m-Y H:i')."',
+                    singleDatePicker: true,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    autoUpdateInput: true,
+                    locale: {
+                        format: 'DD/MM/YYYY hh:mm'
+                    }
+                });
+            });
+        </script>";
+
+    return $string;
+});

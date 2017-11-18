@@ -2,31 +2,62 @@
 
 namespace Modules\Health\Entities;
 
+use Carbon\Carbon;
+use Modules\Tag\Contracts\TaggableInterface;
 use Modules\Tag\Traits\TaggableTrait;
 use Modules\User\Entities\Sentinel\User;
 
-class Post extends BaseModel
+class Post extends BaseModel implements TaggableInterface
 {
     use \Dimsav\Translatable\Translatable,
-        TaggableTrait;
+        \Modules\Core\Traits\NamespacedEntity,
+        \Modules\Tag\Traits\TaggableTrait,
+        \Modules\Media\Support\Traits\MediaRelation;
+
     public $translatedAttributes = ['title', 'content', 'abstract', 'slug'];
+
+    protected static $entityNamespace = 'health/post';
+
     protected $table = 'health__posts';
     protected $fillable = [
         'author_id',
         'is_public',
+        'published_at'
     ];
     protected $casts = [
         'is_public' => 'boolean'
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'published_at'
+    ];
+
     public function author()
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(Author::class, 'author_id');
     }
 
-    public function getAuthorNameAttribute()
+    public function getAuthorNamesAttribute()
     {
-        return $this->author->name;
+        return $this->author->names;
+    }
+
+    public function getFeaturedImageAttribute()
+    {
+        return $this->filesByZone('featured_image')->first();
+    }
+
+    public function getImageGalleryAttribute()
+    {
+        return $this->filesByZone('gallery');
+    }
+
+    public function setPublishedAtAttribute($published_at)
+    {
+        $this->attributes['published_at'] = Carbon::createFromFormat('d/m/Y H:i', $published_at);
     }
 
     public function scopePublic($query)

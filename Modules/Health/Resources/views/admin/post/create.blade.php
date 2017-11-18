@@ -48,6 +48,8 @@
             <div class="box box-primary">
                 <div class="box-body">
                     {!! Form::userSelect('author_id', trans('health::form.author'), $errors) !!}
+                    @tags('health/post')
+                    {!! Form::normalCheckbox('is_public', trans('health::form.public'), $errors) !!}
                     @mediaSingle('featured_image')
                     @mediaMultiple('gallery')
                 </div>

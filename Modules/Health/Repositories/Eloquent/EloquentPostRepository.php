@@ -13,7 +13,10 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     {
         $post = $this->model->create($data);
 
+        $post->setTags(array_get($data, 'tags',[]));
+
         event(new Post\WasCreated($post, $data));
+
 
         return $post;
     }
@@ -22,13 +25,17 @@ class EloquentPostRepository extends EloquentBaseRepository implements PostRepos
     {
         $post->update($data);
 
+        $post->setTags(array_get($data, 'tags',[]));
+
         event(new Post\WasUpdated($post, $data));
+
 
         return $post;
     }
 
     public function destroy($post)
     {
+        $post->untag();
         event(new Post\WasDeleted($post));
 
         return $post->delete();

@@ -212,7 +212,7 @@ return [
     'ady' => ['name' => 'Adyghe', 'script' => 'Cyrl', 'native' => 'адыгэбзэ'],
     'ba' => ['name' => 'Bashkir', 'script' => 'Cyrl', 'native' => 'башҡорт теле'],
     'be' => ['name' => 'Belarusian', 'script' => 'Cyrl', 'native' => 'беларуская'],
-    'bg' => ['name' => 'Bulgarian', 'script' => 'Cyrl', 'native' => 'български'],
+    'bg' => ['name' => 'Bulgarian', 'script' => 'Cyrl', 'native' => 'Български'],
     'kv' => ['name' => 'Komi', 'script' => 'Cyrl', 'native' => 'коми кыв'],
     'mk' => ['name' => 'Macedonian', 'script' => 'Cyrl', 'native' => 'македонски'],
     'mn' => ['name' => 'Mongolian (Cyrillic)', 'script' => 'Cyrl', 'native' => 'монгол'],

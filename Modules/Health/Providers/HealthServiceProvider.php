@@ -10,6 +10,11 @@ use Modules\Health\Console\DatabaseSetupCommand;
 use Modules\Health\Entities;
 use Modules\Health\Repositories;
 use Modules\Health\Events\Handlers\RegisterHealthSidebar;
+use Modules\Setting\Entities\Setting;
+use Modules\Setting\Repositories\Cache\CacheSettingDecorator;
+use Modules\Setting\Repositories\Eloquent\EloquentSettingRepository;
+use Modules\Setting\Repositories\SettingRepository;
+use Modules\Tag\Repositories\TagManager;
 
 class HealthServiceProvider extends ServiceProvider
 {
@@ -42,6 +47,8 @@ class HealthServiceProvider extends ServiceProvider
         $this->publishConfig('health', 'permissions');
         $this->publishConfig('health', 'config');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
+        $this->app[TagManager::class]->registerNamespace(new Entities\Post());
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -90,6 +97,16 @@ class HealthServiceProvider extends ServiceProvider
             }
 
             return new Repositories\Cache\CacheAuthorDecorator($repository);
+        });
+
+        $this->app->bind(SettingRepository::class, function () {
+            $repository = new EloquentSettingRepository(new Setting());
+
+            if (!config('app.cache')) {
+                return $repository;
+            }
+
+            return new CacheSettingDecorator($repository);
         });
     }
 

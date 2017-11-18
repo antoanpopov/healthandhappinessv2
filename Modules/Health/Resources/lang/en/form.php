@@ -12,6 +12,6 @@ return [
     "featured image" => "Featured Image",
     "title" => "Title",
     "author" => "Author",
-    "published at" => "Published",
+    "published at" => "Published at",
     "public" => "Public",
 ];

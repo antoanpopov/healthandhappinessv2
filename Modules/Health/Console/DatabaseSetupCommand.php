@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Foundation\Application;
 use Modules\Health\Database\Seeders\AuthorDatabaseSeeder;
 use Modules\Health\Database\Seeders\CategoryDatabaseSeeder;
+use Modules\Health\Database\Seeders\SettingsDatabaseSeeder;
 use Modules\Health\Entities\Author;
 use Modules\Health\Repositories\Eloquent\EloquentAuthorRepository;
 use Modules\User\Repositories\UserRepository;
@@ -55,10 +56,11 @@ class DatabaseSetupCommand extends Command
 
         $user = $this->application->make(UserRepository::class)->createWithRolesFromCli($info, [1], true);
         $this->application->make(\Modules\User\Repositories\UserTokenRepository::class)->generateFor($user->id);
-        $this->call('module:seed');
-        $this->call('db:seed',['--class'=>AuthorDatabaseSeeder::class]);
-        $this->call('db:seed',['--class'=>CategoryDatabaseSeeder::class]);
         $this->info('Admin account created!');
+        $this->call('module:seed');
+        $this->call('db:seed', ['--class' => AuthorDatabaseSeeder::class]);
+        $this->call('db:seed', ['--class' => CategoryDatabaseSeeder::class]);
+        $this->call('db:seed', ['--class' => SettingsDatabaseSeeder::class]);
 
         $this->info('DATABASE SETUP FINISHED!');
     }

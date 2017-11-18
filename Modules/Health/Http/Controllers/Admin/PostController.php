@@ -30,9 +30,9 @@ class PostController extends AdminBaseController
 
     public function index()
     {
-        $categories = $this->postRepository->all();
+        $posts = $this->postRepository->all();
 
-        return view('health::admin.post.index', compact('categories'));
+        return view('health::admin.post.index', compact('posts'));
     }
 
 
@@ -52,7 +52,7 @@ class PostController extends AdminBaseController
     {
         $this->postRepository->create($request->all());
 
-        return redirect()->route('admin.health.categories.index')
+        return redirect()->route('admin.health.posts.index')
             ->withSuccess(trans('health::messages.entity.created', ['entity' => $request[App::getLocale()]['title']]));
     }
 
@@ -77,7 +77,7 @@ class PostController extends AdminBaseController
         $this->postRepository->update($post, $request->all());
 
         if ($request->get('button') === 'index') {
-            return redirect()->route('admin.health.categories.index')
+            return redirect()->route('admin.health.posts.index')
                 ->withSuccess(trans('health::messages.entity.updated', ['entity' => $post->title]));
         }
 
@@ -95,7 +95,7 @@ class PostController extends AdminBaseController
         $entityTitle = $post->title;
         $this->postRepository->destroy($post);
 
-        return redirect()->route('admin.health.categories.index')
+        return redirect()->route('admin.health.posts.index')
             ->withSuccess(trans('health::messages.entity.deleted', ['entity' => $entityTitle]));
     }
 

@@ -90,5 +90,8 @@
 @section('scripts')
 @show
 @stack('js-stack')
+<script>
+    moment.locale('{{ App::getLocale() }}');
+</script>
 </body>
 </html>
