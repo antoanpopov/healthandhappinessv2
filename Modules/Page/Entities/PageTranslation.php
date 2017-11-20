@@ -7,6 +7,9 @@ use Modules\Page\Events\PageContentIsRendering;
 
 class PageTranslation extends Model
 {
+
+    use \Cviebrock\EloquentSluggable\Sluggable;
+
     protected $table = 'page__page_translations';
     protected $fillable = [
         'page_id',
@@ -27,5 +30,17 @@ class PageTranslation extends Model
         event($event = new PageContentIsRendering($body));
 
         return $event->getBody();
+    }
+
+    /**
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

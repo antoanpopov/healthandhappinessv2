@@ -1,0 +1,31 @@
+header {
+  padding: 28px 0;
+  text-align: center;
+  > .navbar-default {
+    border: none;
+    background-color: transparent;
+    margin-bottom: 0;
+    > .container {
+      .navbar-nav {
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0;
+        > .active {
+          > a {
+            color: $theme-color-accent;
+            background-color: transparent;
+          }
+        }
+        > li {
+          > a {
+            color: #111;
+            &:hover, &:active, &:focus {
+              color: $theme-color-accent;
+            }
+          }
+        }
+      }
+    }
+  }
+}

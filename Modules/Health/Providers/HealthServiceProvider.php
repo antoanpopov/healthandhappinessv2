@@ -15,6 +15,7 @@ use Modules\Setting\Repositories\Cache\CacheSettingDecorator;
 use Modules\Setting\Repositories\Eloquent\EloquentSettingRepository;
 use Modules\Setting\Repositories\SettingRepository;
 use Modules\Tag\Repositories\TagManager;
+use Modules\Health\Composers;
 
 class HealthServiceProvider extends ServiceProvider
 {
@@ -40,6 +41,8 @@ class HealthServiceProvider extends ServiceProvider
             BuildingSidebar::class,
             $this->getSidebarClassForModule('health', RegisterHealthSidebar::class)
         );
+
+        view()->composer('partials._footer', Composers\FooterViewComposer::class);
     }
 
     public function boot()
@@ -47,6 +50,7 @@ class HealthServiceProvider extends ServiceProvider
         $this->publishConfig('health', 'permissions');
         $this->publishConfig('health', 'config');
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadViewsFrom(__DIR__.'/../Resources/views','health');
 
         $this->app[TagManager::class]->registerNamespace(new Entities\Post());
 

@@ -28,7 +28,9 @@
         "idavoll/flatly-theme": "~2.0",
         "idavoll/adminlte-theme": "~2.0",
         "laravel/tinker": "~1.0",
-        "cviebrock/eloquent-sluggable": "^4.2"
+        "cviebrock/eloquent-sluggable": "^4.2",
+        "davejamesmiller/laravel-breadcrumbs": "3.x",
+        "jenssegers/date": "^3.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

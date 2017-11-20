@@ -30,7 +30,6 @@
                     <table class="data-table table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Id</th>
                             <th style="width:20px;" data-sortable="false">{{ trans('health::form.public') }}</th>
                             <th>{{ trans('health::form.featured image') }}</th>
                             <th>{{ trans('health::form.title') }}</th>
@@ -44,11 +43,6 @@
                         <?php if (isset($posts)): ?>
                         <?php foreach ($posts as $post): ?>
                         <tr>
-                            <td>
-                                <a href="{{ URL::route('admin.health.posts.edit', [$post->id]) }}">
-                                    {{ $post->id }}
-                                </a>
-                            </td>
                             <td style="text-align:center; vertical-align: middle;">
                                 @if($post->is_public)
                                     <i class="fa fa-circle" style="color: lawngreen;"/>
@@ -98,7 +92,6 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>Id</th>
                             <th>{{ trans('health::form.public') }}</th>
                             <th>{{ trans('health::form.featured image') }}</th>
                             <th>{{ trans('health::form.title') }}</th>

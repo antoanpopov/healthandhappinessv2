@@ -2,19 +2,13 @@ let mix = require('laravel-mix').mix;
 const WebpackShellPlugin = require('webpack-shell-plugin');
 const themeInfo = require('./theme.json');
 
-/**
- * Compile less
- */
-mix.less('resources/less/main.less', 'assets/css/main.css')
-
+mix.sass('Resources/scss/app.scss','assets/css/all.css');
 /**
  * Concat scripts
  */
 mix.scripts([
-  'node_modules/jquery/dist/jquery.js',
-  'node_modules/bootstrap/dist/js/bootstrap.min.js',
-  'node_modules/prismjs/prism.js',
-  'resources/js/bootswatch.js'
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/bootstrap-sass/assets/javascript/bootstrap.min.js',
 ], 'assets/js/all.js');
 
 /**
@@ -29,7 +23,7 @@ mix.copy(
  * Publishing the assets
  */
 mix.webpackConfig({
-  plugins: [
-    new WebpackShellPlugin({onBuildEnd:['php ../../artisan stylist:publish ' + themeInfo.name]})
-  ]
+    plugins: [
+        new WebpackShellPlugin({onBuildEnd: ['php ../../artisan stylist:publish ' + themeInfo.name]})
+    ]
 });

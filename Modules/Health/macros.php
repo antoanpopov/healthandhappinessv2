@@ -62,9 +62,9 @@ Form::macro('dateRangePicker', function ($name, $title, ViewErrorBag $errors, $o
 
 
     if (is_object($object)) {
-        $currentData = ($object->$name)? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $object->$name)->format('Y-m-d H:i:s') : '';
+        $currentData = ($object->$name)? \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $object->$name)->format('d/m/Y H:i') : '';
     } else {
-        $currentData = \Carbon\Carbon::now();
+        $currentData = \Carbon\Carbon::now()->format('d/m/Y H:i');
     }
 
     $string .= Form::text($name, Request::old($name, $currentData),['class' => 'form-control','id'=>'daterangepicker_'.$name]);
@@ -75,13 +75,13 @@ Form::macro('dateRangePicker', function ($name, $title, ViewErrorBag $errors, $o
     $string .= "<script type=\"text/javascript\">
             $(function () {
                 $('#daterangepicker_" . $name . "').daterangepicker({
-                    startDate: '".date('d-m-Y H:i')."',
+                    startDate: '".$currentData."',
                     singleDatePicker: true,
                     timePicker: true,
                     timePicker24Hour: true,
                     autoUpdateInput: true,
                     locale: {
-                        format: 'DD/MM/YYYY hh:mm'
+                        format: 'DD/MM/YYYY H:mm'
                     }
                 });
             });
